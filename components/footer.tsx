@@ -42,6 +42,10 @@ const footerLinks: FooterSection[] = [
 				title: "Politique de confidentialité",
 				href: "/politique-de-confidentialite",
 			},
+			{
+				title: "Suppression de compte",
+				href: "/suppression-de-compte",
+			},
 			{ title: "Cookies", href: "#" },
 		],
 	},
