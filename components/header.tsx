@@ -20,6 +20,10 @@ export const navLinks = [
 		label: "FAQ",
 		href: "/#faq",
 	},
+	{
+		label: "Suppression de compte",
+		href: "/suppression-de-compte",
+	},
 ];
 
 export function Header() {
