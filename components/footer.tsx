@@ -32,12 +32,14 @@ const footerLinks: FooterSection[] = [
 		],
 	},
 	{
-		// Placeholder destinations — wire to real legal pages when they exist.
-		// "Politique de confidentialité" links to its (mock) page.
+		// Legal pages carry the client-supplied text (see docs/legal/).
+		// There is no standalone cookie policy — cookies are covered by the
+		// audience-measurement section of the privacy policy.
 		label: "Légal",
 		links: [
-			{ title: "Mentions légales", href: "#" },
-			{ title: "CGU", href: "#" },
+			{ title: "Mentions légales", href: "/mentions-legales" },
+			{ title: "CGU", href: "/cgu" },
+			{ title: "CGV", href: "/cgv" },
 			{
 				title: "Politique de confidentialité",
 				href: "/politique-de-confidentialite",
@@ -46,7 +48,7 @@ const footerLinks: FooterSection[] = [
 				title: "Suppression de compte",
 				href: "/suppression-de-compte",
 			},
-			{ title: "Cookies", href: "#" },
+			{ title: "Cookies", href: "/politique-de-confidentialite#audience" },
 		],
 	},
 	{

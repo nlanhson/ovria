@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import { Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AppleLogo } from "@/components/site/apple-logo";
+import { GooglePlayGlyph } from "@/components/site/google-play-glyph";
 
 function StoreBadge({
   href,
@@ -21,7 +21,7 @@ function StoreBadge({
       href={href}
       aria-label={`${top} ${bottom}`}
       className={cn(
-        "inline-flex h-[52px] w-full items-center gap-3 rounded-[14px] px-4 whitespace-nowrap transition-all duration-200 hover:-translate-y-0.5 hover:opacity-95 hover:shadow-lg active:translate-y-0 active:shadow-md",
+        "inline-flex h-[52px] items-center gap-3 rounded-[14px] px-4 whitespace-nowrap transition-all duration-200 hover:-translate-y-0.5 hover:opacity-95 hover:shadow-lg active:translate-y-0 active:shadow-md",
         onDark ? "bg-on-ink text-primary" : "bg-primary text-primary-foreground",
       )}
     >
@@ -46,7 +46,7 @@ export function AppBadges({
   onDark?: boolean;
 }) {
   return (
-    <div className={cn("mx-auto grid w-fit gap-3 sm:grid-cols-2", className)}>
+    <div className={cn("mx-auto grid w-fit grid-cols-1 gap-3 sm:grid-cols-2", className)}>
       {/* TODO: replace with official App Store + Google Play SVG badges (FR locale). */}
       <StoreBadge
         href="#telecharger"
@@ -60,7 +60,7 @@ export function AppBadges({
         top="Disponible sur"
         bottom="Google Play"
         onDark={onDark}
-        glyph={<Play className="size-5 fill-current" />}
+        glyph={<GooglePlayGlyph className="size-5" />}
       />
     </div>
   );

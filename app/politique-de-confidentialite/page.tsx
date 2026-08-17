@@ -1,309 +1,472 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
-import { Section } from "@/components/site/section";
-import { Container } from "@/components/site/container";
-import { Eyebrow } from "@/components/site/eyebrow";
-import { Reveal } from "@/components/site/reveal";
+import {
+  LegalPage,
+  type LegalSection,
+} from "@/components/site/legal-page";
+import { COMPANY, LEGAL_VERSION_DATE } from "@/lib/company";
 
-/* ------------------------------------------------------------------ *
- *  MOCKUP — privacy policy page for the OVRIA client demo (look & feel).
- *  The content is realistic but illustrative: the legal text should be
- *  reviewed by counsel and the COMPANY details below replaced with
- *  OVRIA's real information before this goes live.
- * ------------------------------------------------------------------ */
+/* Text supplied by the client — see docs/legal/politique-de-confidentialite.docx.
+   Transcribed verbatim; edit the source document, not this file, when the legal
+   wording changes. Replaces the earlier mockup, which carried placeholder
+   company details. */
 
 const TITLE = "Politique de confidentialité";
-const LAST_UPDATED = "5 juin 2026";
 const DESCRIPTION =
-  "Comment OVRIA collecte, utilise et protège vos données personnelles lorsque vous utilisez notre plateforme de mise en relation directe entre ouvriers du BTP et entreprises.";
+  "Comment OVRIA collecte, utilise, conserve et protège vos données personnelles, conformément au RGPD et à la législation française applicable.";
 
 export const metadata: Metadata = {
   title: `${TITLE} — OVRIA`,
   description: DESCRIPTION,
-  // Mockup with sample data — keep out of search until finalised.
-  robots: { index: false, follow: true },
+  alternates: { canonical: "/politique-de-confidentialite" },
 };
 
-/* Sample/mock company details for the demo — replace with OVRIA's real
-   legal information before going live. */
-const COMPANY = {
-  legalName: "OVRIA SAS",
-  legalForm: "société par actions simplifiée (SAS)",
-  capital: "10 000 €",
-  rcs: "Paris",
-  siren: "912 345 678",
-  address: "12 rue de l’Industrie, 75011 Paris",
-  contactEmail: "contact@ovria.fr",
-  dpoEmail: "dpo@ovria.fr",
-};
-
-type Block =
-  | { kind: "p"; text: string }
-  | { kind: "ul"; items: string[] };
-
-type PolicySection = {
-  id: string;
-  heading: string;
-  blocks: Block[];
-};
-
-const SECTIONS: PolicySection[] = [
+const SECTIONS: LegalSection[] = [
   {
-    id: "responsable",
-    heading: "1. Responsable du traitement",
+    id: "presentation",
+    heading: "1. Présentation",
     blocks: [
       {
         kind: "p",
-        text: `Le responsable du traitement des données personnelles collectées via la plateforme OVRIA est ${COMPANY.legalName}, ${COMPANY.legalForm} au capital de ${COMPANY.capital}, immatriculée au RCS de ${COMPANY.rcs} (SIREN ${COMPANY.siren}), dont le siège social est situé ${COMPANY.address}.`,
+        text: "La présente Politique de confidentialité a pour objet d’informer les utilisateurs de la plateforme OVRIA sur la manière dont leurs données personnelles sont collectées, utilisées, conservées et protégées.",
       },
       {
         kind: "p",
-        text: `Pour toute question relative à la présente politique ou à vos données personnelles, vous pouvez nous écrire à ${COMPANY.contactEmail}.`,
+        text: "OVRIA accorde une importance particulière à la protection des données personnelles et s’engage à traiter celles-ci conformément au Règlement (UE) 2016/679 du 27 avril 2016 (RGPD) ainsi qu’à la législation française applicable.",
       },
     ],
   },
   {
-    id: "donnees-collectees",
-    heading: "2. Données que nous collectons",
+    id: "responsable",
+    heading: "2. Responsable du traitement",
     blocks: [
+      { kind: "p", text: "Le responsable du traitement est :" },
+      {
+        kind: "lines",
+        lines: [
+          COMPANY.legalName,
+          COMPANY.shortForm,
+          ...COMPANY.addressLines,
+        ],
+      },
+      { kind: "p", text: `Contact : ${COMPANY.contactEmail}` },
+    ],
+  },
+  {
+    id: "donnees-collectees",
+    heading: "3. Données collectées",
+    blocks: [
+      { kind: "h3", text: "3.1 Données des travailleurs" },
       {
         kind: "p",
-        text: "Nous collectons les données que vous nous fournissez directement lorsque vous créez un compte et utilisez OVRIA, ainsi que des données générées automatiquement par votre utilisation du service :",
+        text: "Lors de l’inscription et de l’utilisation de la plateforme, OVRIA peut collecter :",
       },
       {
         kind: "ul",
         items: [
-          "Données d’identification : nom, prénom, adresse e-mail, numéro de téléphone et mot de passe.",
-          "Profil professionnel (ouvriers) : métier et spécialité (maçon, coffreur, électricien, etc.), qualifications et certifications, années d’expérience, disponibilité, zone géographique d’intervention et, le cas échéant, photo de profil.",
-          "Données des entreprises : raison sociale, numéro SIRET, secteur d’activité, description des chantiers et des besoins de recrutement, coordonnées du contact.",
-          "Données de mise en relation : candidatures, offres, messages échangés et mises en relation réalisées via la plateforme.",
-          "Données de connexion et d’usage : adresse IP, identifiants de connexion, type d’appareil, système d’exploitation, journaux d’activité et données de navigation.",
-          "Données de localisation : zone géographique approximative permettant de proposer des chantiers ou des ouvriers à proximité. La géolocalisation précise n’est utilisée qu’avec votre consentement et peut être désactivée à tout moment.",
+          "prénom ;",
+          "nom ;",
+          "photographie de profil ;",
+          "métier ;",
+          "expériences professionnelles ;",
+          "formations ;",
+          "préférences contractuelles ;",
+          "ville ;",
+          "localisation géographique et rayon de mobilité ;",
+          "CV intégré à l’application ;",
+          "description professionnelle ;",
+          "lien portfolio ;",
+          "statut de disponibilité ;",
+          "informations de connexion ;",
+          "historique des échanges réalisés sur la plateforme.",
         ],
+      },
+      { kind: "h3", text: "3.2 Données des entreprises" },
+      { kind: "p", text: "OVRIA peut collecter :" },
+      {
+        kind: "ul",
+        items: [
+          "dénomination de l’entreprise ;",
+          "siret ;",
+          "logo ;",
+          "ville ;",
+          "description de l’activité ;",
+          "statut juridique ;",
+          "lien portfolio ;",
+          "informations de connexion ;",
+          "historique des échanges ;",
+          "données liées à l’abonnement.",
+        ],
+      },
+      { kind: "h3", text: "3.3 Données techniques" },
+      { kind: "p", text: "OVRIA peut également collecter :" },
+      {
+        kind: "ul",
+        items: [
+          "adresse IP ;",
+          "identifiants techniques ;",
+          "données de navigation ;",
+          "données de connexion ;",
+          "informations relatives au terminal utilisé ;",
+          "données de sécurité.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "donnees-visibles",
+    heading: "4. Données visibles sur la plateforme",
+    blocks: [
+      { kind: "h3", text: "Profils travailleurs" },
+      { kind: "p", text: "Les entreprises peuvent consulter :" },
+      {
+        kind: "ul",
+        items: [
+          "prénom ;",
+          "nom ;",
+          "photographie ;",
+          "métier ;",
+          "expériences ;",
+          "formations ;",
+          "ville ;",
+          "rayon de mobilité ;",
+          "CV ;",
+          "description ;",
+          "lien portfolio ;",
+          "statut de disponibilité ;",
+          "indication relative à l’actualisation du profil.",
+        ],
+      },
+      {
+        kind: "p",
+        text: "Les adresses électroniques et numéros de téléphone ne sont pas rendus publics sur les profils.",
+      },
+      { kind: "h3", text: "Profils entreprises" },
+      { kind: "p", text: "Les travailleurs peuvent consulter :" },
+      {
+        kind: "ul",
+        items: [
+          "nom de l’entreprise ;",
+          "logo ;",
+          "ville ;",
+          "description ;",
+          "statut juridique ;",
+          "lien portfolio.",
+        ],
+      },
+      {
+        kind: "p",
+        text: "Les adresses électroniques et numéros de téléphone ne sont pas rendus publics sur les profils.",
       },
     ],
   },
   {
     id: "finalites",
-    heading: "3. Finalités et bases légales",
+    heading: "5. Finalités des traitements",
+    blocks: [
+      { kind: "p", text: "Les données sont collectées afin de :" },
+      {
+        kind: "ul",
+        items: [
+          "permettre la création et la gestion des comptes utilisateurs ;",
+          "faciliter les mises en relation professionnelles ;",
+          "permettre l’utilisation de la messagerie interne ;",
+          "gérer les abonnements entreprises ;",
+          "assurer la sécurité de la plateforme ;",
+          "améliorer les services proposés ;",
+          "produire des statistiques d’utilisation ;",
+          "répondre aux obligations légales.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "bases-legales",
+    heading: "6. Bases légales des traitements",
     blocks: [
       {
         kind: "p",
-        text: "Nous traitons vos données pour les finalités suivantes, chacune reposant sur une base légale au sens du RGPD :",
+        text: "OVRIA traite les données personnelles sur les fondements suivants :",
       },
       {
         kind: "ul",
         items: [
-          "Créer et gérer votre compte — exécution du contrat (nos conditions générales d’utilisation).",
-          "Assurer la mise en relation directe entre ouvriers et entreprises, cœur de notre service — exécution du contrat.",
-          "Améliorer, personnaliser et sécuriser la plateforme — intérêt légitime.",
-          "Vous adresser des informations relatives au fonctionnement du service (notifications, mises en relation) — exécution du contrat.",
-          "Vous envoyer des communications marketing — votre consentement, que vous pouvez retirer à tout moment.",
-          "Prévenir et détecter la fraude, les abus et les usages non conformes — intérêt légitime.",
-          "Respecter nos obligations légales, comptables et fiscales — obligation légale.",
+          "exécution du contrat conclu avec l’utilisateur ;",
+          "intérêt légitime d’OVRIA à améliorer et sécuriser la plateforme ;",
+          "consentement lorsque celui-ci est requis ;",
+          "respect des obligations légales applicables.",
         ],
+      },
+    ],
+  },
+  {
+    id: "messagerie",
+    heading: "7. Messagerie interne",
+    blocks: [
+      {
+        kind: "p",
+        text: "Lorsqu’une demande de conversation est acceptée par les utilisateurs concernés, ceux-ci peuvent échanger directement via la messagerie intégrée à la plateforme.",
+      },
+      {
+        kind: "p",
+        text: "Les messages sont conservés afin de permettre le bon fonctionnement du service et d’assurer la sécurité des échanges.",
+      },
+      {
+        kind: "p",
+        text: "OVRIA n’exerce aucun contrôle préalable sur le contenu des conversations.",
+      },
+    ],
+  },
+  {
+    id: "geolocalisation",
+    heading: "8. Géolocalisation",
+    blocks: [
+      {
+        kind: "p",
+        text: "OVRIA peut traiter des données de localisation afin de permettre aux utilisateurs :",
+      },
+      {
+        kind: "ul",
+        items: [
+          "d’indiquer leur zone de recherche ;",
+          "de définir un rayon de mobilité ;",
+          "d’identifier les opportunités professionnelles à proximité.",
+        ],
+      },
+      {
+        kind: "p",
+        text: "Les données de localisation sont utilisées exclusivement dans le cadre du fonctionnement de la plateforme.",
+      },
+    ],
+  },
+  {
+    id: "authentification",
+    heading: "9. Connexion et authentification",
+    blocks: [
+      { kind: "p", text: "Les utilisateurs peuvent se connecter :" },
+      {
+        kind: "ul",
+        items: [
+          "par adresse électronique et mot de passe ;",
+          "via leur compte Google ;",
+          "via leur compte Apple.",
+        ],
+      },
+      {
+        kind: "p",
+        text: "L’utilisation de ces services d’authentification implique la transmission des données strictement nécessaires à la création et à la gestion du compte OVRIA.",
+      },
+    ],
+  },
+  {
+    id: "audience",
+    heading: "10. Analyse d’audience",
+    blocks: [
+      {
+        kind: "p",
+        text: "OVRIA utilise des outils d’analyse d’audience tels que Google Analytics afin de :",
+      },
+      {
+        kind: "ul",
+        items: [
+          "mesurer l’utilisation de la plateforme ;",
+          "améliorer les fonctionnalités proposées ;",
+          "comprendre les comportements de navigation.",
+        ],
+      },
+      {
+        kind: "p",
+        text: "Ces outils peuvent utiliser des cookies ou technologies similaires.",
       },
     ],
   },
   {
     id: "destinataires",
-    heading: "4. Destinataires des données",
+    heading: "11. Destinataires des données",
     blocks: [
-      {
-        kind: "p",
-        text: "Vos données ne sont accessibles qu’aux personnes qui en ont besoin et ne sont jamais vendues à des tiers :",
-      },
+      { kind: "p", text: "Les données personnelles peuvent être accessibles :" },
       {
         kind: "ul",
         items: [
-          "Les autres utilisateurs de la plateforme, dans le strict cadre de la mise en relation : une entreprise peut consulter le profil professionnel d’un ouvrier disponible, et un ouvrier les chantiers proposés par une entreprise.",
-          "Nos prestataires techniques (hébergement, envoi d’e-mails et de SMS, mesure d’audience), qui agissent en tant que sous-traitants pour notre compte et selon nos instructions.",
-          "Les autorités administratives ou judiciaires, lorsque la loi nous y oblige.",
+          "aux utilisateurs dans les limites définies par les paramètres de visibilité de la plateforme ;",
+          "aux prestataires techniques intervenant pour le fonctionnement du service ;",
+          "aux prestataires de paiement ;",
+          "aux autorités administratives ou judiciaires lorsque la loi l’exige.",
         ],
       },
       {
         kind: "p",
-        text: "OVRIA ne commercialise ni ne loue vos données personnelles à des tiers à des fins publicitaires.",
+        text: "OVRIA ne vend jamais les données personnelles de ses utilisateurs.",
       },
     ],
   },
   {
-    id: "transferts",
-    heading: "5. Transferts hors de l’Union européenne",
+    id: "hebergement",
+    heading: "12. Hébergement et sous-traitants",
     blocks: [
       {
         kind: "p",
-        text: "Vos données sont hébergées au sein de l’Union européenne. Si certains de nos prestataires devaient traiter des données en dehors de l’UE, nous nous assurons que des garanties appropriées sont mises en place (notamment les clauses contractuelles types de la Commission européenne).",
+        text: "Les données peuvent être hébergées ou traitées par des prestataires présentant des garanties appropriées en matière de sécurité et de conformité au RGPD.",
+      },
+      { kind: "p", text: "OVRIA peut notamment recourir à :" },
+      {
+        kind: "ul",
+        items: [
+          "OVHcloud ;",
+          "Google Cloud Platform ;",
+          "Firebase ;",
+          "Google Analytics ;",
+          "Stripe ;",
+          "Supabase.",
+        ],
       },
     ],
   },
   {
     id: "conservation",
-    heading: "6. Durées de conservation",
+    heading: "13. Durée de conservation",
     blocks: [
+      { kind: "h3", text: "Comptes travailleurs" },
       {
-        kind: "ul",
-        items: [
-          "Données de compte : conservées pendant toute la durée d’utilisation du service.",
-          "Après suppression du compte ou inactivité prolongée : vos données sont supprimées ou anonymisées, sous réserve des durées de conservation imposées par la loi.",
-          "Données de connexion : conservées jusqu’à 12 mois conformément à la réglementation applicable.",
-          "Données comptables et contractuelles : conservées pendant la durée légale requise.",
-        ],
+        kind: "p",
+        text: "Les données sont conservées pendant toute la durée d’utilisation du compte.",
+      },
+      {
+        kind: "p",
+        text: "Un profil n’ayant enregistré aucune activité pendant douze (12) mois pourra être rendu temporairement invisible.",
+      },
+      {
+        kind: "p",
+        text: "Après vingt-quatre (24) mois d’inactivité, OVRIA pourra anonymiser ou supprimer le compte ainsi que les données associées.",
+      },
+      { kind: "h3", text: "Comptes entreprises" },
+      {
+        kind: "p",
+        text: "En cas de résiliation ou d’expiration de l’abonnement, le profil demeure visible pendant une durée maximale de neuf (9) mois.",
+      },
+      {
+        kind: "p",
+        text: "À l’issue de cette période, OVRIA se réserve le droit de maintenir, rendre invisible, anonymiser ou supprimer le compte et les données associées.",
       },
     ],
   },
   {
     id: "securite",
-    heading: "7. Sécurité",
+    heading: "14. Sécurité des données",
     blocks: [
       {
         kind: "p",
-        text: "Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre la perte, l’accès non autorisé, la divulgation ou l’altération : chiffrement des échanges, contrôle des accès, hébergement sécurisé et surveillance de la plateforme.",
+        text: "OVRIA met en œuvre des mesures techniques et organisationnelles destinées à assurer la sécurité, l’intégrité et la confidentialité des données personnelles.",
+      },
+      {
+        kind: "p",
+        text: "Malgré ces mesures, aucun système informatique ne peut garantir une sécurité absolue.",
       },
     ],
   },
   {
     id: "droits",
-    heading: "8. Vos droits",
+    heading: "15. Droits des utilisateurs",
     blocks: [
       {
         kind: "p",
-        text: "Conformément au RGPD et à la loi Informatique et Libertés, vous disposez des droits suivants sur vos données personnelles :",
+        text: "Conformément au RGPD, chaque utilisateur dispose :",
       },
       {
         kind: "ul",
         items: [
-          "Droit d’accès et de rectification.",
-          "Droit à l’effacement (« droit à l’oubli »).",
-          "Droit à la limitation et à l’opposition au traitement.",
-          "Droit à la portabilité de vos données.",
-          "Droit de retirer votre consentement à tout moment, lorsque le traitement repose sur celui-ci.",
+          "d’un droit d’accès ;",
+          "d’un droit de rectification ;",
+          "d’un droit d’effacement ;",
+          "d’un droit d’opposition ;",
+          "d’un droit à la limitation du traitement ;",
+          "d’un droit à la portabilité des données ;",
+          "du droit de retirer son consentement lorsque le traitement repose sur celui-ci.",
         ],
       },
       {
         kind: "p",
-        text: `Vous pouvez exercer ces droits depuis les paramètres de votre compte ou en nous écrivant à ${COMPANY.contactEmail}. Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire une réclamation auprès de la CNIL (www.cnil.fr).`,
+        text: `Toute demande peut être adressée à : ${COMPANY.contactEmail}`,
       },
     ],
   },
   {
-    id: "cookies",
-    heading: "9. Cookies",
+    id: "reclamation",
+    heading: "16. Réclamation",
     blocks: [
       {
         kind: "p",
-        text: "Nous utilisons des cookies et technologies similaires pour assurer le bon fonctionnement de la plateforme, mesurer son audience et, avec votre consentement, personnaliser votre expérience. Vous pouvez gérer vos préférences à tout moment. Pour en savoir plus, consultez notre politique relative aux cookies.",
+        text: "Les utilisateurs disposent du droit d’introduire une réclamation auprès de la Commission Nationale de l’Informatique et des Libertés (CNIL).",
       },
     ],
   },
   {
-    id: "mineurs",
-    heading: "10. Mineurs",
+    id: "modification",
+    heading: "17. Modification de la politique",
     blocks: [
       {
         kind: "p",
-        text: "OVRIA s’adresse à des professionnels du BTP majeurs. Nous ne collectons pas sciemment de données concernant des personnes mineures.",
+        text: "OVRIA peut modifier la présente Politique de confidentialité à tout moment afin de tenir compte des évolutions légales, réglementaires, techniques ou fonctionnelles.",
+      },
+      {
+        kind: "p",
+        text: "La version applicable est celle publiée sur la plateforme.",
       },
     ],
   },
   {
-    id: "modifications",
-    heading: "11. Modifications de la politique",
+    id: "suppression-compte",
+    heading: "18. Suppression du compte",
     blocks: [
       {
         kind: "p",
-        text: "Nous pouvons être amenés à modifier la présente politique de confidentialité afin de refléter l’évolution de notre service ou de la réglementation. La date de dernière mise à jour figure en haut de cette page ; en cas de changement important, nous vous en informerons par les moyens appropriés.",
+        text: "Les utilisateurs peuvent supprimer leur compte à tout moment depuis les paramètres de l’application.",
+      },
+      {
+        kind: "p",
+        text: "La suppression du compte entraîne la suppression ou l’anonymisation des données personnelles associées dans un délai raisonnable, sous réserve des obligations légales de conservation applicables.",
+      },
+      {
+        kind: "p",
+        text: "Lorsque la suppression du compte est demandée par un utilisateur bénéficiant d’un abonnement actif, cette suppression n’entraîne pas automatiquement la résiliation des engagements financiers en cours, lesquels demeurent régis par les Conditions Générales de Vente (CGV).",
+      },
+      {
+        kind: "p",
+        text: "Certaines données pourront être conservées lorsque leur conservation est nécessaire :",
+      },
+      {
+        kind: "ul",
+        items: [
+          "au respect d’une obligation légale ;",
+          "à l’exercice ou à la défense des droits d’OVRIA ;",
+          "à la prévention des fraudes et des abus.",
+        ],
+      },
+      {
+        kind: "p",
+        text: "La suppression du compte entraîne la perte d’accès aux services, fonctionnalités et informations associés au compte concerné.",
       },
     ],
   },
   {
     id: "contact",
-    heading: "12. Nous contacter",
+    heading: "19. Contact",
     blocks: [
       {
         kind: "p",
-        text: `Pour toute question concernant cette politique ou le traitement de vos données, écrivez-nous à ${COMPANY.contactEmail}${
-          COMPANY.dpoEmail ? ` (délégué à la protection des données : ${COMPANY.dpoEmail})` : ""
-        }.`,
+        text: "Pour toute question relative à la présente Politique de confidentialité ou à l’exercice des droits RGPD :",
       },
+      { kind: "p", text: COMPANY.contactEmail },
     ],
   },
 ];
 
-export default function PrivacyPolicyPage() {
+export default function PolitiqueDeConfidentialitePage() {
   return (
-    <>
-      <Header />
-      <main>
-        <Section>
-          <Container>
-            <Reveal className="measure">
-              <Eyebrow>Légal</Eyebrow>
-              <h1 className="t-display-l mt-4 text-ink">{TITLE}</h1>
-              <p className="t-lead mt-6 text-ink-2">
-                La présente politique décrit la manière dont OVRIA collecte,
-                utilise et protège vos données personnelles lorsque vous utilisez
-                notre plateforme de mise en relation directe entre ouvriers du
-                BTP et entreprises, accessible sur ovria.fr et via nos
-                applications iOS et Android. Nous traitons vos données dans le
-                respect du Règlement général sur la protection des données (RGPD)
-                et de la loi Informatique et Libertés.
-              </p>
-              <p className="t-caption mt-4 text-off">
-                Dernière mise à jour : {LAST_UPDATED}
-              </p>
-            </Reveal>
-
-            {/* Table of contents */}
-            <Reveal delay={60} className="measure mt-12">
-              <nav aria-label="Sommaire">
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  {SECTIONS.map((section) => (
-                    <li key={section.id}>
-                      <a
-                        href={`#${section.id}`}
-                        className="t-body-sm text-ink-2 underline-offset-4 duration-250 hover:text-ink hover:underline"
-                      >
-                        {section.heading}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </Reveal>
-
-            <Reveal delay={100} className="measure mt-12 space-y-10">
-              {SECTIONS.map((section) => (
-                <section
-                  key={section.id}
-                  id={section.id}
-                  className="scroll-mt-24"
-                >
-                  <h2 className="t-display-m text-ink">{section.heading}</h2>
-                  {section.blocks.map((block, i) =>
-                    block.kind === "p" ? (
-                      <p key={i} className="t-body mt-4 text-ink-2">
-                        {block.text}
-                      </p>
-                    ) : (
-                      <ul
-                        key={i}
-                        className="mt-4 space-y-2 ps-5 t-body text-ink-2 [&>li]:list-disc [&>li]:marker:text-off"
-                      >
-                        {block.items.map((item, j) => (
-                          <li key={j}>{item}</li>
-                        ))}
-                      </ul>
-                    ),
-                  )}
-                </section>
-              ))}
-            </Reveal>
-          </Container>
-        </Section>
-      </main>
-      <Footer />
-    </>
+    <LegalPage
+      title={TITLE}
+      intro="La présente Politique de confidentialité a pour objet d’informer les utilisateurs de la plateforme OVRIA sur la manière dont leurs données personnelles sont collectées, utilisées, conservées et protégées, conformément au RGPD et à la législation française applicable."
+      lastUpdated={LEGAL_VERSION_DATE}
+      sections={SECTIONS}
+    />
   );
 }
