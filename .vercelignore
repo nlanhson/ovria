@@ -1,0 +1,8 @@
+# Keep CLI deploys small — Vercel installs and builds these itself.
+node_modules
+.next
+.git
+
+# Local build artefacts and client source documents, not needed at runtime.
+tsconfig.tsbuildinfo
+docs
